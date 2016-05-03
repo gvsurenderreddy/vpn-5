@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Conor Schaefer (@conorsch)
+  description: Stands up OpenVPN server.
+  company: Freedom of the Press Foundation (@freedomofpress)
+  license: MIT
+  min_ansible_version: 2
+  platforms:
+    - name: Debian
+      versions:
+        - jessie
+  galaxy_tags:
+    - vpn
+    - security
+    - privacy
+    - iptables
+    - openvpn
+dependencies:
+  - role: mikegleasonjr.firewall
+  - role: stdouts.openvpn
