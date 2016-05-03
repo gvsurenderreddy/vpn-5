@@ -1,2 +1,18 @@
 ---
-# vars file for vpn
+# Overrides for stouts.openvpn
+openvpn_clients:
+  - laptop
+  - phone
+
+openvpn_use_pam: no
+
+# Far more reliable connections.
+openvpn_proto: tcp
+
+openvpn_key_size: 2048
+
+openvpn_server_options:
+  - push "redirect-gateway def1"
+  - topology subnet
+  - push "dhcp-option DNS 208.67.222.222"
+  - push "dhcp-option DNS 208.67.220.220"
