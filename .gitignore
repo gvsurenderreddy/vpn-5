@@ -1,0 +1,5 @@
+.gitignore
+.molecule/
+.travis.yml
+.vagrant/
+roles/
