@@ -16,4 +16,4 @@ galaxy_info:
     - openvpn
 dependencies:
   - role: mikegleasonjr.firewall
-  - role: stdouts.openvpn
+  - role: Stouts.openvpn
