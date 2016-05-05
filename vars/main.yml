@@ -1,5 +1,5 @@
 ---
-# Overrides for stouts.openvpn
+# Overrides for Stouts.openvpn role
 openvpn_clients:
   - laptop
   - phone
@@ -16,3 +16,21 @@ openvpn_server_options:
   - topology subnet
   - push "dhcp-option DNS 208.67.222.222"
   - push "dhcp-option DNS 208.67.220.220"
+
+# Overrides for mikegleasonjr.firewall role
+# Rules sourced from: http://allanmcrae.com/2013/09/routing-traffic-with-openvpn/
+firewall_v4_host_rules:
+  700 allow openvpn traffic:
+    # OpenVPN
+    - -A INPUT -i eth0 -m state --state NEW -p tcp --dport 1194 -j ACCEPT
+
+    # Allow TUN interface connections to OpenVPN server
+    - -A INPUT -i tun+ -j ACCEPT
+
+    # Allow TUN interface connections to be forwarded through other interfaces
+    - -A FORWARD -i tun+ -j ACCEPT
+    - -A FORWARD -i tun+ -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+    - -A FORWARD -i eth0 -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+    # NAT the VPN client traffic to the internet
+    - -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
