@@ -1,2 +1,4 @@
 ---
 # defaults file for vpn
+
+vpn_certs_dest_dir: files/openvpn

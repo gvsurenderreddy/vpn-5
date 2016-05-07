@@ -1,9 +1,17 @@
 ---
 # pass newly configured keys to client host
+- name: Create local directory for storing VPN certificates.
+  become: no
+  local_action:
+    module: file
+    path: "{{ vpn_certs_dest_dir }}"
+    state: directory
+    mode: "0700"
+
 - name: Copy ovpn file to VPN client. (from vpn_server to vpn_client)
   fetch:
     src: /etc/openvpn/keys/{{ item }}.ovpn
-    dest: openvpn_files/
+    dest: "{{ vpn_certs_dest_dir }}/"
     mode: "0600"
     flat: yes
     # don't fail on missing, since manual setup still possible
@@ -12,7 +20,7 @@
 - name: Copy key file to vpn client (from vpn_server to vpn_client)
   fetch:
     src: /etc/openvpn/keys/{{ item }}.key
-    dest: openvpn_files/
+    dest: "{{ vpn_certs_dest_dir }}/"
     mode: "0600"
     flat: yes
     fail_on_missing: yes
@@ -21,7 +29,7 @@
 - name: Copy cert file to vpn client (from vpn_server to vpn_client)
   fetch:
     src: /etc/openvpn/keys/{{ item }}.crt
-    dest: openvpn_files/
+    dest: "{{ vpn_certs_dest_dir }}/"
     mode: "0600"
     flat: yes
     fail_on_missing: yes
@@ -30,7 +38,7 @@
 - name: Copy ca file to vpn client (from vpn_server to vpn_client)
   fetch:
     src: /etc/openvpn/keys/ca.crt
-    dest: openvpn_files/
+    dest: "{{ vpn_certs_dest_dir }}/"
     mode: "0600"
     flat: yes
     fail_on_missing: yes
