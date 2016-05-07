@@ -1,3 +1,5 @@
 ---
 # tasks file for vpn
+- include: sysctl.yml
+
 - include: fetch_keys.yml
