@@ -1,2 +1,3 @@
 ---
 # tasks file for vpn
+- include: fetch_keys.yml

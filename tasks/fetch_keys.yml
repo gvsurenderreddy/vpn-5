@@ -1,0 +1,37 @@
+---
+# pass newly configured keys to client host
+- name: Copy ovpn file to VPN client. (from vpn_server to vpn_client)
+  fetch:
+    src: /etc/openvpn/keys/{{ item }}.ovpn
+    dest: openvpn_files/
+    mode: "0600"
+    flat: yes
+    # don't fail on missing, since manual setup still possible
+  with_items: openvpn_clients
+
+- name: Copy key file to vpn client (from vpn_server to vpn_client)
+  fetch:
+    src: /etc/openvpn/keys/{{ item }}.key
+    dest: openvpn_files/
+    mode: "0600"
+    flat: yes
+    fail_on_missing: yes
+  with_items: openvpn_clients
+
+- name: Copy cert file to vpn client (from vpn_server to vpn_client)
+  fetch:
+    src: /etc/openvpn/keys/{{ item }}.crt
+    dest: openvpn_files/
+    mode: "0600"
+    flat: yes
+    fail_on_missing: yes
+  with_items: openvpn_clients
+
+- name: Copy ca file to vpn client (from vpn_server to vpn_client)
+  fetch:
+    src: /etc/openvpn/keys/ca.crt
+    dest: openvpn_files/
+    mode: "0600"
+    flat: yes
+    fail_on_missing: yes
+
